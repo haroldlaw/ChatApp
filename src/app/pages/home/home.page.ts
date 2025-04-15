@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ModalController, PopoverController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -17,8 +18,12 @@ export class HomePage implements OnInit {
     { id: 1, name: 'Darren', photo: 'https://i.pravatar.cc/300' },
     { id: 2, name: 'Sam', photo: 'https://i.pravatar.cc/305' }
   ]
+  chatRooms = [
+    { id: 1, name: 'Darren', photo: 'https://i.pravatar.cc/300' },
+    { id: 2, name: 'Sam', photo: 'https://i.pravatar.cc/305' }
+  ]
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,10 +31,10 @@ export class HomePage implements OnInit {
   logout() {
     this.popover.dismiss()
   }
+
   onSegmentChanged(event: any) {
     console.log(event)
   }
-
 
   newChat() {
     this.open_new_chat = true
@@ -46,5 +51,9 @@ export class HomePage implements OnInit {
 
   startChat(item) {
 
+  }
+
+  getChat(item){
+    this.router.navigate(['/', 'home', 'chats', item?.id])
   }
 }

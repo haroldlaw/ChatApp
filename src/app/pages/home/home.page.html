@@ -30,44 +30,16 @@
 </ion-header>
 
 <ion-content color="light">
-  <ion-list *ngIf="segment == 'chats'">
+  <ion-list *ngIf="segment == 'chats' && (chatRooms) as rooms">
     <ion-list-header class="ion-padding-bottom" color="light">
       Recent Chats
     </ion-list-header>
-    <ion-item detail>
+    <ion-item *ngFor="let item of rooms" (click)="getChat(item)" detail>
       <ion-avatar slot="start">
-        <img [src]="'https://i.pravatar.cc/300'" />
+        <img [src]="item?.photo" />
       </ion-avatar>
       <ion-label>
-        Darren
-        <p>
-          <ion-text>
-            message
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-text slot="end" color="medium">10:00 AM</ion-text>
-    </ion-item>
-    <ion-item detail>
-      <ion-avatar slot="start">
-        <img [src]="'https://i.pravatar.cc/305'" />
-      </ion-avatar>
-      <ion-label>
-        Sam
-        <p>
-          <ion-text>
-            message
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-text slot="end" color="medium">10:00 AM</ion-text>
-    </ion-item>
-    <ion-item detail>
-      <ion-avatar slot="start">
-        <img [src]="'https://i.pravatar.cc/310'" />
-      </ion-avatar>
-      <ion-label>
-        Ivan
+        {{item?.name}}
         <p>
           <ion-text>
             message
