@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   standalone: false,
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./empty-screen.component.scss'],
 })
 export class EmptyScreenComponent  implements OnInit {
+  @Input() model: any
 
   constructor() { }
 
