@@ -54,7 +54,7 @@ export class SignupPage implements OnInit {
     console.log(form.value);
     this.authService.register(form.value).then((data: any) => {
       console.log(data);
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/login');
       this.isLoading = false;
       form.reset();
     })

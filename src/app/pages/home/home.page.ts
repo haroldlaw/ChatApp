@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ChatService } from './../../services/chat/chat.service';
 
 @Component({
   standalone: false,
@@ -23,13 +24,22 @@ export class HomePage implements OnInit {
     { id: 2, name: 'Sam', photo: 'https://i.pravatar.cc/305' }
   ]
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private chatService: ChatService
+  ) { }
 
   ngOnInit() {
   }
 
-  logout() {
-    this.popover.dismiss()
+  async logout() {
+    try {
+      console.log('logout');
+      this.popover.dismiss();
+      await this.chatService.auth.logout();
+      this.router.navigateByUrl('/login', {replaceUrl: true});
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   onSegmentChanged(event: any) {
