@@ -15,10 +15,7 @@ export class HomePage implements OnInit {
   @ViewChild('popover') popover: PopoverController
   segment = 'chats'
   open_new_chat = false
-  users = [
-    { id: 1, name: 'Darren', photo: 'https://i.pravatar.cc/300' },
-    { id: 2, name: 'Sam', photo: 'https://i.pravatar.cc/305' }
-  ]
+  users: Observable<any[]>
   chatRooms = [
     { id: 1, name: 'Darren', photo: 'https://i.pravatar.cc/300' },
     { id: 2, name: 'Sam', photo: 'https://i.pravatar.cc/305' }
@@ -48,6 +45,12 @@ export class HomePage implements OnInit {
 
   newChat() {
     this.open_new_chat = true
+    if(!this.users) this.getUsers()
+  }
+
+  getUsers() {
+    this.chatService.getUsers()
+    this.users = this.chatService.users
   }
 
   onWillDismiss(event: any) {
