@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ChatService } from './../../services/chat/chat.service';
 
 @Component({
@@ -16,16 +16,25 @@ export class HomePage implements OnInit {
   segment = 'chats'
   open_new_chat = false
   users: Observable<any[]>
-  chatRooms = [
-    { id: 1, name: 'Darren', photo: 'https://i.pravatar.cc/300' },
-    { id: 2, name: 'Sam', photo: 'https://i.pravatar.cc/305' }
-  ]
+  chatRooms: Observable<any[]>
+  model = {
+    icon: 'chatbubbles-outline',
+    title: 'No Chat',
+    color: 'primary'
+  }
 
   constructor(private router: Router,
     private chatService: ChatService
   ) { }
 
   ngOnInit() {
+    this.getRooms()
+  }
+
+  getRooms() {
+    this.chatService.getChatRooms();
+    this.chatRooms = this.chatService.chatRooms;
+    console.log('chatrooms: ', this.chatRooms);
   }
 
   async logout() {
@@ -41,6 +50,7 @@ export class HomePage implements OnInit {
 
   onSegmentChanged(event: any) {
     console.log(event)
+    this.segment = event.detail.value
   }
 
   newChat() {
@@ -62,11 +72,37 @@ export class HomePage implements OnInit {
     this.open_new_chat = false;
   }
 
-  startChat(item) {
-
+  async startChat(item) {
+    try {
+      const room = await this.chatService.createChatRoom(item?.uid);
+      console.log('room: ', room);
+      this.cancel();
+      const navData: NavigationExtras = {
+        queryParams: {
+          name: item?.name
+        }
+      };
+      this.router.navigate(['/', 'home', 'chats', room?.id], navData);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
-  getChat(item){
-    this.router.navigate(['/', 'home', 'chats', item?.id])
+  getChat(item) {
+    (item?.user).pipe(
+      take(1)
+    ).subscribe(user_data => {
+      console.log('data: ', user_data);
+      const navData: NavigationExtras = {
+        queryParams: {
+          name: user_data?.name
+        }
+      };
+      this.router.navigate(['/', 'home', 'chats', item?.id], navData);
+    });
+  }
+
+  getUser(user: any) {
+    return user;
   }
 }
