@@ -15,9 +15,7 @@ export class ChatService {
 
   constructor(public auth: AuthService,
     private api: ApiService
-  ) {
-    this.getId()
-  }
+  ) { }
 
   getId() {
     console.log(this.currentUserId);

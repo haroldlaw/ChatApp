@@ -71,6 +71,7 @@ export class AuthService {
     try {
       await this.fireAuth.signOut();
       this._uid.next(null);
+      this.currentUser = null;
       return true;
     } catch (e) {
       throw (e);

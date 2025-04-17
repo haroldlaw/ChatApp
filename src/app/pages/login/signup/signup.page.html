@@ -59,7 +59,10 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-button color="primary" shape="round" (click)="onSubmit()">Sign Up</ion-button>
+      <ion-button *ngIf="!isLoading" color="primary" shape="round" (click)="onSubmit()">Sign Up</ion-button>
+      <ion-button fill="clear" *ngIf="isLoading">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </ion-button>
     </ion-list>
   </form>
 </ion-content>

@@ -6,45 +6,28 @@
         <img src="assets/logo.png" />
       </div>
       <ion-item class="ion-margin-vertical">
-        <ion-icon 
-          name="mail-outline" slot="end" color="medium">
+        <ion-icon name="mail-outline" slot="end" color="medium">
         </ion-icon>
-        <ion-input 
-          formControlName="email" 
-          placeholder="Email">
+        <ion-input formControlName="email" placeholder="Email">
         </ion-input>
       </ion-item>
-      <ion-text 
-        class="ion-text-left"
-        color="danger"
-        *ngIf="!form.get('email').valid && form.get('email').touched">
+      <ion-text class="ion-text-left" color="danger" *ngIf="!form.get('email').valid && form.get('email').touched">
         <p class="error">*Please enter a valid email address</p>
       </ion-text>
 
       <ion-item class="ion-margin-vertical">
-        <ion-icon (click)="onChange()"
-          [name]="isTypePassword ? 'lock-closed-outline' : 'lock-open-outline'" 
-          slot="end" 
+        <ion-icon (click)="onChange()" [name]="isTypePassword ? 'lock-closed-outline' : 'lock-open-outline'" slot="end"
           [color]="isTypePassword ? 'medium' : 'primary'">
         </ion-icon>
-        <ion-input 
-          formControlName="password" 
-          [type]="isTypePassword ? 'password' : 'text'"
-          placeholder="Password">
+        <ion-input formControlName="password" [type]="isTypePassword ? 'password' : 'text'" placeholder="Password">
         </ion-input>
       </ion-item>
-      <ion-text 
-        class="ion-text-left"
-        color="danger"
+      <ion-text class="ion-text-left" color="danger"
         *ngIf="!form.get('password').valid && form.get('password').touched">
-        <p 
-          class="error" 
-          *ngIf="form.get('password').invalid && form.get('password').errors['required']">
+        <p class="error" *ngIf="form.get('password').invalid && form.get('password').errors['required']">
           *Please enter your password
         </p>
-        <p 
-          class="error" 
-          *ngIf="form.get('password').dirty">
+        <p class="error" *ngIf="form.get('password').dirty">
           *Password must have at least 8 characters
         </p>
       </ion-text>
@@ -62,7 +45,10 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-button color="primary" shape="round" (click)="onSubmit()">Log In</ion-button>
+      <ion-button *ngIf="!isLogin" color="primary" shape="round" (click)="onSubmit()">Log In</ion-button>
+      <ion-button fill="clear" *ngIf="isLogin">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </ion-button>
       <p class="signup">
         <ion-note>
           Don't have an account? <ion-text routerLink="/login/signup" color="primary">Sign Up</ion-text>

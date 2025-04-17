@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">bleep</string>
+    <string name="title_activity_main">bleep</string>
+    <string name="package_name">com.bleep</string>
+    <string name="custom_url_scheme">com.bleep</string>
+</resources>

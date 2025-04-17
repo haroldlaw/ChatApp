@@ -47,12 +47,15 @@ export class LoginPage implements OnInit {
   }
 
   login(form) {
+    this.isLogin = true;
     this.authService.login(form.value.email, form.value.password).then(data => {
       console.log(data);
+      this.isLogin = false;
       this.router.navigateByUrl('/home');
       form.reset();
     })
       .catch(e => {
+        this.isLogin = false;
         console.log(e);
         let msg: string = 'Log in failed. Please try again.';
         if (e.code == 'auth/user-not-found') msg = 'Email address could not be found';
